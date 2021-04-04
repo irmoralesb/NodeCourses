@@ -1,0 +1,13 @@
+Docker container for MongoDB
++ Create Network
+    docker network create -d bridge mongodbnetwork
+
++ Create Docker image
+    docker run -d --network mongodbnetwork -p 27017:27017 --name mongodb mongo
+
++ Create Docker IDE for MongoDB
+    Test
+    docker run -it --network mongodbnetwork --rm mongo mongo --host mongodb test
+
+    Connect
+    docker run --network mongodbnetwork -e ME_CONFIG_MONGODB_SERVER=mongodb -p 8081:8081 mongo-express
