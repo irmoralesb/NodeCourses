@@ -1,28 +1,14 @@
 /* eslint-disable no-param-reassign */
 const express = require('express');
+const booksController = require('../controllers/booksController');
+const bookController = require('../controllers/booksController');
 
 function routes(Book) {
   const bookRouter = express.Router();
+  const controller = booksController(Book);
   bookRouter.route("/books")
-    .post((req, res) => {
-      console.log(req.body);
-      const book = new Book(req.body);
-      book.save();
-      console.log(book);
-      return res.status(201).json(book);
-    })
-    .get((req, res) => {
-      const query = {};
-      if (req.query.genre) {
-        query.genre = req.query.genre;
-      }
-      Book.find(query, (err, books) => {
-        if (err) {
-          return res.send(err);
-        }
-        return res.json(books);
-      });
-    });
+    .post(controller.post)
+    .get(controller.get);
 
   //Middleware / To get the book and then process the rest
   bookRouter.use("/books/:bookId", (req, res, next) => {
@@ -78,6 +64,6 @@ function routes(Book) {
     });
 
   return bookRouter;
-}
+} 
 
 module.exports = routes;
