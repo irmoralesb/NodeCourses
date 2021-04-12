@@ -3,6 +3,8 @@ const sinon = require('sinon');
 const booksController = require('../controllers/booksController');
 const bookController = require('../controllers/booksController');
 
+process.env.ENV = 'Test';
+
 describe('Book Controller Tests', () => {
     describe('Post', () => {
         it('should not allow an empty title on post', () => {
